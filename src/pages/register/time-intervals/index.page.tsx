@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { api } from '../../../lib/axios'
 import { convertTimeStringToMinutes } from '../../../utils/convert-time-string-to-minutes'
 import { getWeekDays } from '../../../utils/get-week-days';
+import { useRouter } from 'next/router' 
 import {
   FormError,
   IntervalBox,
@@ -65,6 +66,9 @@ type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
 type TimeIntervalsFormOutput = z.output<typeof timeIntervalsFormSchema>
 
 export default function TimeIntervals() {
+
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -102,6 +106,8 @@ export default function TimeIntervals() {
     await api.post('/users/time-intervals', {
       intervals,
     })
+
+    await router.push('/register/update-profile')
   }
 
   return (
